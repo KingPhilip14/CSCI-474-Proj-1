@@ -75,9 +75,7 @@ int main()
             // an integer to contain the sum from what the child read
             int childSum = 0;
 
-            string line;
-
-            for(int j = 0; getline(file, line); j++)
+            for(int j = 0; j < linesToRead * (i + 1); j++)
             {
                 // ignore the lines that have already been read by the previous child
                 if(j != startingLine)
@@ -86,7 +84,12 @@ int main()
                     continue;
                 }
 
-                childSum += stoi(line);
+                string line;
+
+                while(getline(file, line))
+                {
+                    childSum += stoi(line);
+                }
             }
 
             file.close();
@@ -98,6 +101,8 @@ int main()
 
             // increase where the next child needs to start reading from
             startingLine += linesToRead - 1;
+
+            cout << "Starting line: " << startingLine;
 
             exit(0);
         }
