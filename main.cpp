@@ -86,7 +86,7 @@ int main()
                     continue;
                 }
 
-                childSum += stoi(getline(file, line));
+                childSum += stoi(line);
             }
 
             file.close();
