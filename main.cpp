@@ -75,21 +75,27 @@ int main()
             // an integer to contain the sum from what the child read
             int childSum = 0;
 
+            fseek(file, (i * linesToRead * 5), SEEK_SET);
+
             for(int j = 0; j < linesToRead * (i + 1); j++)
             {
+                int num = 0;
+                fscanf(file, "%d\n", &num);
+                childSum += num;
+                
                 // ignore the lines that have already been read by the previous child
-                if(j != startingLine)
-                {
-                    file.ignore(1000, '\n');
-                    continue;
-                }
+                // if(j != startingLine)
+                // {
+                //     file.ignore(1000, '\n');
+                //     continue;
+                // }
 
-                string line;
+                // string line;
 
-                while(getline(file, line))
-                {
-                    childSum += stoi(line);
-                }
+                // while(getline(file, line))
+                // {
+                //     childSum += stoi(line);
+                // }
             }
 
             file.close();
