@@ -88,11 +88,11 @@ int main()
 
                 while(getline(file, line))
                 {
-                    sum += stoi(line);
+                    childSum += stoi(line);
                 }
-
-                childSum += stoi(line);
             }
+
+            file.close();
 
             printf("Child %d has the following sum: %d", i, childSum);
 
@@ -101,8 +101,6 @@ int main()
 
             // increase where the next child needs to start reading from
             startingLine += linesToRead - 1;
-
-            file.close();
 
             exit(0);
         }
@@ -124,8 +122,8 @@ int main()
     auto finalTime = chrono::duration_cast<chrono::microseconds>(endTime - startTime).count();
 
     // display final results
-    printf("The final sum for %s is: %d\n", filename.c_str(), completeTotal);
-    printf("The total time taken with %d child(ren) for %s is: %ld\n\n", numOfChildren, filename.c_str(), finalTime);
+    printf("\n\nThe final sum for %s is: %d\n", filename.c_str(), completeTotal);
+    printf("The total time taken with %d child(ren) for %s is: %ld ms\n\n", numOfChildren, filename.c_str(), finalTime);
 
     return 0;
 }
