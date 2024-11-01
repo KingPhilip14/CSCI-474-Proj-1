@@ -71,13 +71,13 @@ int main()
         {
             // make an ifstream object to read from the file
             ifstream file(filename);
-            
-            fseek(file, );
 
             // an integer to contain the sum from what the child read
             int childSum = 0;
 
-            for(int j = 0; j < linesToRead * (i + 1); j++)
+            string line;
+
+            for(int j = 0; getline(file, line); j++)
             {
                 // ignore the lines that have already been read by the previous child
                 if(j != startingLine)
@@ -85,8 +85,6 @@ int main()
                     file.ignore(1000, '\n');
                     continue;
                 }
-
-                string line;
 
                 childSum += stoi(getline(file, line));
             }
