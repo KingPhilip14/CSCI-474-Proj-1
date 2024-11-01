@@ -92,6 +92,8 @@ int main()
             startingLine += linesToRead - 1;
 
             file.close();
+
+            exit();
         }
     }
 
