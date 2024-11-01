@@ -118,8 +118,8 @@ int main()
     auto finalTime = chrono::duration_cast<chrono::seconds>(endTime - startTime).count();
 
     // display final results
-    printf("The final sum for %s is: %d", filename, completeTotal);
-    printf("The total time taken with %d children for %s is: %d", numOfChildren, filename.c_str(), finalTime);
+    printf("The final sum for %s is: %d", filename.c_str(), completeTotal);
+    printf("The total time taken with %d children for %s is: %ld", numOfChildren, filename.c_str(), finalTime);
 
     return 0;
 }
