@@ -70,36 +70,29 @@ int main()
         if(fork() == 0)
         {
             // make an ifstream object to read from the file
-            // ifstream file(filename);
-            FILE * file;
+            ifstream file(filename);
 
             // an integer to contain the sum from what the child read
             int childSum = 0;
 
-            fseek(file, (i * linesToRead * 5), SEEK_SET);
-
             for(int j = 0; j < linesToRead * (i + 1); j++)
             {
-                int num = 0;
-                fscanf(file, "%d\n", &num);
-                childSum += num;
-
                 // ignore the lines that have already been read by the previous child
-                // if(j != startingLine)
-                // {
-                //     file.ignore(1000, '\n');
-                //     continue;
-                // }
+                if(j != startingLine)
+                {
+                    file.ignore(1000, '\n');
+                    continue;
+                }
 
-                // string line;
+                string line;
 
-                // while(getline(file, line))
-                // {
-                //     childSum += stoi(line);
-                // }
+                while(getline(file, line))
+                {
+                    childSum += stoi(line);
+                }
             }
 
-            fclose(file);
+            file.close();
 
             printf("Child %d has the following sum: %d\n\n", i + 1, childSum);
 
@@ -108,8 +101,6 @@ int main()
 
             // increase where the next child needs to start reading from
             startingLine += linesToRead - 1;
-
-            cout << "Starting line: " << startingLine;
 
             exit(0);
         }
