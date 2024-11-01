@@ -11,8 +11,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 
-// don't forget <sys/wait.h>
 using namespace std;
 
 /**
