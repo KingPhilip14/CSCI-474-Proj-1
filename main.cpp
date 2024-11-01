@@ -3,8 +3,8 @@
 #include <sstream>
 #include <vector>
 #include <algorithm>
-#include <limits>
 #include <cmath>
+#include <chrono>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -50,6 +50,8 @@ int main()
     // store the user's input for the file they selected
     int fileNum = intInput("\nWhich file would you like to use (File 1, File2, or File 3)?\nThere are 1000, 10000, and 100000 lines for each file respectively.\nPlease provide only an integer for the desired file (1, 2, or 3).", fileOptions);
 
+    auto startTime = chrono::high_resolution_clock::now();
+
     string filename = "file" + to_string(fileNum) + ".dat";
 
     // calculate the number of lines each child process should read 
@@ -71,7 +73,7 @@ int main()
             ifstream file(filename);
             
             // an integer to contain the sum from what the child read
-            int childSumTotal = 0;
+            int childSum = 0;
 
             for(int j = 0; j < linesToRead * i; j++)
             {
@@ -85,18 +87,18 @@ int main()
                     continue;
                 }
                 
-                childSumTotal += num;
+                childSum += num;
             }
 
             // write this child's sum to the pipe
-            write(fds[1], &childSumTotal, sizeof(int));
+            write(fds[1], &childSum, sizeof(int));
 
             // increase where the next child needs to start reading from
             startingLine += linesToRead - 1;
 
             file.close();
 
-            exit();
+            exit(0);
         }
     }
 
@@ -106,15 +108,16 @@ int main()
     // calculate the sum by adding the smaller sums each child calculated
     for(int i = 0; i < numOfChildren; i++)
     {
-        int childSumTotal = 0;
-        read(fds[0], &childSumTotal, sizeof(int));
-        completeTotal += childSumTotal;
+        int childSum = 0;
+        read(fds[0], &childSum, sizeof(int));
+        completeTotal += childSum;
     }
+
+    auto endTime = chrono::high_resolution_clock::now();
+
+    auto finalTime = chrono::duration_cast<chrono::seconds>(endTime - startTime).count();
 
     // display final results
     printf("The final sum for %s is: %d", filename, completeTotal);
-
-    // timer (do NOT use clock) processes
-
-    printf("The total time taken with %d children for %s is: ", time, filename);
+    printf("The total time taken with %d children for %s is: %d", numOfChildren, filename, finalTime);
 }
