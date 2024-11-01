@@ -48,7 +48,7 @@ int main()
     vector<int> fileOptions = { 1, 2, 3 };
     
     // store the user's input for the file they selected
-    int fileNum = intInput("\nWhich file would you like to use (File 1, File2, or File 3)?\nThere are 1000, 10000, and 100000 lines for each file respectively.\nPlease provide only an integer for the desired file (1, 2, or 3).", fileOptions);
+    int fileNum = intInput("\nWhich file would you like to use (file1, file2, or file3)?\nThere are 1000, 10000, and 100000 lines for each file respectively.\nPlease provide only an integer for the desired file (1, 2, or 3).", fileOptions);
 
     auto startTime = chrono::high_resolution_clock::now();
 
@@ -77,17 +77,15 @@ int main()
 
             for(int j = 0; j < linesToRead * i; j++)
             {
-                // the number read from the line in the file
-                int num = 0;
-
                 // ignore the lines that have already been read by the previous child
                 if(j != startingLine)
                 {
                     file.ignore(1000, '\n');
                     continue;
                 }
-                
-                childSum += num;
+
+                string line;
+                childSum += stoi(getline(file, line));
             }
 
             // write this child's sum to the pipe
@@ -115,11 +113,11 @@ int main()
 
     auto endTime = chrono::high_resolution_clock::now();
 
-    auto finalTime = chrono::duration_cast<chrono::seconds>(endTime - startTime).count();
+    auto finalTime = chrono::duration_cast<chrono::microseconds>(endTime - startTime).count();
 
     // display final results
-    printf("The final sum for %s is: %d", filename.c_str(), completeTotal);
-    printf("The total time taken with %d children for %s is: %ld", numOfChildren, filename.c_str(), finalTime);
+    printf("The final sum for %s is: %d\n", filename.c_str(), completeTotal);
+    printf("The total time taken with %d child(ren) for %s is: %ld\n\n", numOfChildren, filename.c_str(), finalTime);
 
     return 0;
 }
