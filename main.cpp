@@ -99,7 +99,7 @@ int main()
                 // }
             }
 
-            file.close();
+            fclose(file);
 
             printf("Child %d has the following sum: %d\n\n", i + 1, childSum);
 
