@@ -75,7 +75,7 @@ int main()
             // an integer to contain the sum from what the child read
             int childSum = 0;
 
-            for(int j = 0; j < linesToRead * i + 1; j++)
+            for(int j = 0; j < linesToRead * (i + 1); j++)
             {
                 // ignore the lines that have already been read by the previous child
                 if(j != startingLine)
