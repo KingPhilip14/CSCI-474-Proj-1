@@ -88,6 +88,9 @@ int main()
                 childSumTotal += num;
             }
 
+            // write this child's sum to the pipe
+            write(fds[1], &childSumTotal, sizeof(int));
+
             // increase where the next child needs to start reading from
             startingLine += linesToRead - 1;
 
@@ -104,7 +107,7 @@ int main()
     for(int i = 0; i < numOfChildren; i++)
     {
         int childSumTotal = 0;
-        // read(fds[0], &childSumTotal, sizeof(int));
+        read(fds[0], &childSumTotal, sizeof(int));
         completeTotal += childSumTotal;
     }
 
