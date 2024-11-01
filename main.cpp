@@ -72,6 +72,8 @@ int main()
             // make an ifstream object to read from the file
             ifstream file(filename);
             
+            fseek(file, );
+
             // an integer to contain the sum from what the child read
             int childSum = 0;
 
@@ -86,15 +88,12 @@ int main()
 
                 string line;
 
-                while(getline(file, line))
-                {
-                    childSum += stoi(line);
-                }
+                childSum += stoi(getline(file, line));
             }
 
             file.close();
 
-            printf("Child %d has the following sum: %d", i, childSum);
+            printf("Child %d has the following sum: %d\n\n", i + 1, childSum);
 
             // write this child's sum to the pipe
             write(fds[1], &childSum, sizeof(int));
