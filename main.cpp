@@ -75,7 +75,7 @@ int main()
             // an integer to contain the sum from what the child read
             int childSum = 0;
 
-            for(int j = 0; j < linesToRead * i; j++)
+            for(int j = 0; j < linesToRead * i + 1; j++)
             {
                 // ignore the lines that have already been read by the previous child
                 if(j != startingLine)
@@ -85,8 +85,16 @@ int main()
                 }
 
                 string line;
-                childSum += stoi(getline(file, line));
+
+                while(getline(file, line))
+                {
+                    sum += stoi(line);
+                }
+
+                childSum += stoi(line);
             }
+
+            printf("Child %d has the following sum: %d", i, childSum);
 
             // write this child's sum to the pipe
             write(fds[1], &childSum, sizeof(int));
