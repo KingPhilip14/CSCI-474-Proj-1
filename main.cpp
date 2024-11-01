@@ -70,7 +70,8 @@ int main()
         if(fork() == 0)
         {
             // make an ifstream object to read from the file
-            ifstream file(filename);
+            // ifstream file(filename);
+            FILE * file;
 
             // an integer to contain the sum from what the child read
             int childSum = 0;
@@ -82,7 +83,7 @@ int main()
                 int num = 0;
                 fscanf(file, "%d\n", &num);
                 childSum += num;
-                
+
                 // ignore the lines that have already been read by the previous child
                 // if(j != startingLine)
                 // {
