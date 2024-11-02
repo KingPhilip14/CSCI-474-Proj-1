@@ -77,19 +77,18 @@ int main()
 
             for(int j = 0; j < linesToRead * (i + 1); j++)
             {
+                // Create the line to read and a temp variable to ignore duplicate lines
+                string line, temp;
+
                 // ignore the lines that have already been read by the previous child
                 if(j != startingLine)
                 {
-                    file.ignore(1000, '\n');
+                    getline(file, temp);
                     continue;
                 }
 
-                string line;
-
-                while(getline(file, line))
-                {
-                    childSum += stoi(line);
-                }
+                getline(file, line);
+                childSum += stoi(line);
             }
 
             file.close();
@@ -118,10 +117,8 @@ int main()
     }
 
     auto endTime = chrono::high_resolution_clock::now();
-
     auto finalTime = chrono::duration_cast<chrono::microseconds>(endTime - startTime).count();
 
-    // display final results
     printf("\n\nThe final sum for %s is: %d\n", filename.c_str(), completeTotal);
     printf("The total time taken with %d child(ren) for %s is: %ld ms\n\n", numOfChildren, filename.c_str(), finalTime);
 
